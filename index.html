@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Interactive dashboard identifying the most impactful engineers in the PostHog/posthog GitHub repository over the last 90 days." />
+  <title>PostHog · Team Impact Analysis</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="src/css/tokens.css">
+  <link rel="stylesheet" href="src/css/base.css">
+  <link rel="stylesheet" href="src/css/components.css">
+  <link rel="stylesheet" href="src/css/layout.css">
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── Header ── -->
+    <header class="header">
+      <div class="header-top">
+        <div class="logo">🦔</div>
+        <h1>Team Impact Analysis</h1>
+      </div>
+      <p class="header-meta">
+        Last 90 days &nbsp;·&nbsp;
+        <a href="https://github.com/PostHog/posthog" target="_blank" rel="noopener">PostHog/posthog</a>
+        &nbsp;·&nbsp; 5 active engineers &nbsp;·&nbsp; Live GitHub data
+      </p>
+    </header>
+
+    <!-- ── Summary Tiles ── -->
+    <section class="tiles" aria-label="Summary statistics">
+      <div class="tile">
+        <div class="tile-top">
+          <span class="tile-label">Active Engineers</span>
+          <div class="tile-icon" aria-hidden="true">👩‍💻</div>
+        </div>
+        <div class="tile-value">5</div>
+      </div>
+      <div class="tile">
+        <div class="tile-top">
+          <span class="tile-label">Total PRs Merged</span>
+          <div class="tile-icon" aria-hidden="true">⚡</div>
+        </div>
+        <div class="tile-value">117</div>
+      </div>
+      <div class="tile">
+        <div class="tile-top">
+          <span class="tile-label">Average Impact Score</span>
+          <div class="tile-icon" aria-hidden="true">🎯</div>
+        </div>
+        <div class="tile-value">68</div>
+      </div>
+      <div class="tile">
+        <div class="tile-top">
+          <span class="tile-label">Combined Reviews</span>
+          <div class="tile-icon" aria-hidden="true">💬</div>
+        </div>
+        <div class="tile-value">74</div>
+      </div>
+    </section>
+
+    <!-- ── Top Contributor ── -->
+    <section class="top-card" aria-label="Top contributor">
+      <div class="top-badge">⭐ &nbsp;Top Contributor</div>
+      <div class="top-person">
+        <img
+          class="avatar"
+          src="https://github.com/benjackwhite.png?size=100"
+          width="46" height="46"
+          alt="benjackwhite GitHub avatar"
+          onerror="this.style.display='none';document.getElementById('top-fb').style.display='flex'"
+        />
+        <div id="top-fb" class="avatar-fallback" style="width:46px;height:46px;font-size:14px;background:var(--c1);display:none">BJ</div>
+        <div>
+          <div class="top-name">benjackwhite</div>
+          <div class="top-sub">CDP / Plugin-Server</div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-label">Impact Score</span>
+          <span class="stat-value" style="color:var(--c1)">91</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">PRs Merged</span>
+          <span class="stat-value" style="color:var(--c2)">35</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Files Changed</span>
+          <span class="stat-value">25+</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Avg Merge Time</span>
+          <span class="stat-value" style="color:var(--c3)">8h</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Code Reviews</span>
+          <span class="stat-value" style="color:var(--c5)">18</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Score Methodology ── -->
+    <section class="method-box" aria-label="Scoring methodology">
+      <div class="method-title">How I calculated the Impact Score</div>
+      <p class="method-intro">
+        I didn't want to just count commits or lines of code — those reward noise, not value.
+        Instead I asked: <em>what does it actually look like when an engineer is making the team move faster?</em>
+        Here's what I landed on:
+      </p>
+      <div class="method-items">
+        <div class="method-item">
+          <span class="method-num">×3</span>
+          <div><strong>Shipping velocity</strong> — I weighted merged PRs most heavily because at the end of the day, value is only delivered when code ships. An engineer who consistently closes PRs is unblocking the team and driving the product forward.</div>
+        </div>
+        <div class="method-item">
+          <span class="method-num">×2</span>
+          <div><strong>Code reviews given</strong> — I gave this a high weight because reviews are a direct multiplier on teammates' output. An engineer who reviews 20 PRs has effectively co-authored 20 pieces of work. This is often invisible in raw commit data.</div>
+        </div>
+        <div class="method-item">
+          <span class="method-num">×0.6</span>
+          <div><strong>Codebase breadth</strong> — I counted unique files changed (capped at 60) to reward engineers who work cross-cutting rather than staying in one corner. Broad touch signals architectural thinking and fewer siloes.</div>
+        </div>
+        <div class="method-item">
+          <span class="method-num">+up to 25</span>
+          <div><strong>Lines contributed</strong> — I included this as a soft signal of substance, not raw effort. I capped the contribution at 25 points so a single large refactor doesn't dominate the score over consistent delivery.</div>
+        </div>
+        <div class="method-item">
+          <span class="method-num">+6 bonus</span>
+          <div><strong>Merge speed</strong> — I added a small bonus for engineers who get PRs merged within 48 hours. Fast merge times suggest well-scoped, reviewable work — and keep the rest of the team unblocked.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Leaderboard ── -->
+    <section aria-label="Engineer leaderboard">
+      <div class="lb-header">
+        <h2>Impact Leaderboard</h2>
+        <p>Ranked by impact score across shipping, quality, breadth, and collaboration &nbsp;·&nbsp; Click a row to explore</p>
+      </div>
+      <div id="leaderboard"></div>
+    </section>
+
+    <footer class="footer">
+      <a href="https://github.com/PostHog/posthog" target="_blank" rel="noopener">github.com/PostHog/posthog</a>
+      &nbsp;·&nbsp; Last 90 days &nbsp;·&nbsp; Built with Claude
+    </footer>
+
+  </div><!-- /.page -->
+
+  <!-- Data & Logic -->
+  <script src="src/data/engineers.js"></script>
+  <script src="src/js/score.js"></script>
+  <script src="src/js/components.js"></script>
+  <script src="src/js/main.js"></script>
+</body>
+</html>

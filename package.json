@@ -1,0 +1,29 @@
+{
+  "name": "posthog-impact-dashboard",
+  "version": "1.0.0",
+  "description": "Interactive dashboard identifying the most impactful engineers in the PostHog/posthog GitHub repository over the last 90 days.",
+  "author": "",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "npx serve . --listen 3000 --no-clipboard",
+    "start": "npx serve . --listen 3000",
+    "preview": "npx serve . --listen 8080"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  },
+  "keywords": [
+    "posthog",
+    "github",
+    "engineering",
+    "dashboard",
+    "impact",
+    "metrics"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/posthog-impact-dashboard.git"
+  },
+  "homepage": "https://YOUR_USERNAME.github.io/posthog-impact-dashboard"
+}
