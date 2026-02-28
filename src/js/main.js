@@ -41,6 +41,7 @@
   function init() {
     renderLeaderboard();
     animateBars();
+    initMethodToggle();
   }
 
   // Run after DOM is ready
@@ -50,3 +51,26 @@
     init();
   }
 })();
+
+  /**
+   * Collapsible methodology section.
+   * Open by default on load; toggles on button click.
+   */
+  function initMethodToggle() {
+    const btn  = document.getElementById('methodToggle');
+    const body = document.getElementById('methodBody');
+    const chevron = document.getElementById('methodChevron');
+    if (!btn || !body) return;
+
+    // Collapsed by default
+    body.classList.add("collapsed");
+    chevron.classList.add("collapsed");
+    btn.setAttribute("aria-expanded", "false");
+
+    btn.addEventListener('click', function () {
+      const isOpen = !body.classList.contains('collapsed');
+      body.classList.toggle('collapsed', isOpen);
+      chevron.classList.toggle('collapsed', isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
+    });
+  }
